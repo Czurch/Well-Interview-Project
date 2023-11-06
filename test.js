@@ -64,7 +64,7 @@ describe("full function", () => {
   it("should get accurate values from Map", async () => {
     let times = 5;
     while (times--) {
-      inputEndpoint("fullfunction");
+      await inputEndpoint("fullfunction");
     }
     await expect(queryEndpoint("fullfunction")).resolves.toBe("5");
   });
