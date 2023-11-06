@@ -1,14 +1,18 @@
-#How to Run
-npm install
-npm start
+#To Install
+-clone respository
+-npm install
+-npm start
 
-
+#To Test
+-ensure backend is running
+-npm run test
+-npm run wipe (to reset for another test)
 
 
 
 #The Assignment - My Thoughts
-Write a long-lived service in JavaScript/NodeJS, that:
-"Listens on port 9000 for incoming HTTP connections (use any library you'd like)" 
+"Write a long-lived service in JavaScript/NodeJS, that:
+Listens on port 9000 for incoming HTTP connections (use any library you'd like)" 
 
 I'm most comfortable with setting up express as a backend, and its a common enough library 
 that other contributors can easily help with the project as it matures.
@@ -30,15 +34,20 @@ the key from /query will be used to get the value in the Map (with O(1) lookup)
     if key does not exist in Map, return 0
     else return value at key
 
+To Test:
+    We'll need a function that can hit this endpoint,
+    maybe use a really light library to test that the values returning are correct. 
+    (might not be necessary)
 
-Update: I'm wondering about the wording "long-lived service". I thinking the data should be persistent
+
+Update: I'm wondering about the wording "long-lived service". I'm thinking the data should be persistent
     I haven't used it before but sqlite might be a good idea for such a small project since it would
     be easy for others to use since it will live in a sqlite file in the repo.
 
     Currently, the project uses an In-Mem Map to store the frequency table. This is fine, but results in
     a full wipe every time we run 'npm start'.
 
-    A JSON file could be used since it would be simple enough to use and pass between myself and the devs
+    A JSON file is a possibility. It would be simple enough to use and pass between myself and the devs
     that will be running this project. However, depending on the rate of requests to the backend it may become
     a bottleneck or lead to corrupted data.
 
@@ -52,12 +61,6 @@ UPDATE: After doing some reading I found https://www.npmjs.com/package/better-sq
         Lots of the docs suggest serializing the requests. This, however, might jeopardize the "handle concurrent connections"
         requirement. (Depending on what is meant by "handle") To be safe, I'll add a cache for recent queries, with some invalidation
         on the /input endpoint, and a timeout.
-
-To Test:
-    We'll need a function that can hit this endpoint,
-    maybe use a really light library to test that the values returning are correct. 
-    (might not be necessary)
-
 
 
 STEPS:
@@ -74,4 +77,7 @@ STEPS:
     -added logic for incrementing count on freqency map if the key already exists
     -imported jest, added test script to package.json
     -made some simple tests to confirm that API works as intended
-    -made more tests to confirm that concurrent requests doesn't fudge the data.
+    -made more tests to confirm that concurrent requests don't break the system.
+    -replaced In Mem Map with better-sqlite3 to have persistent data even after app is terminated
+    -added an in mem cache for better performance on reads
+    
