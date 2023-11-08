@@ -20,13 +20,13 @@ that other contributors can easily help with the project as it matures.
 "in non-blocking fashion."
 
 Node by nature is event based, meaning our program should have asynchronous (non-blocking)
-behavior by default.
+behavior by default. The backend should accept concurrent requests.
 
 My understanding is that the ask is to create 2 routes.
 /input takes a POST with string in the body.
 /query accepts a GET with a key param.
 
-We'll create a frequency map using a Map to ensure unique keys.
+We'll create a frequency table using a Map to ensure unique keys.
 /input will give us a string,   if that string exists in the Map we increment the value at that location
                                 if not we add it to the Map and initialize its value to one.
 
